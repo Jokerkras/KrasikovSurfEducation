@@ -7,7 +7,7 @@ import android.os.Handler
 
 class SplashActivity : AppCompatActivity() {
 
-    val SPLASH_DISPLAY_LENGHT = 3000L
+    val SPLASH_DISPLAY_LENGHT = 300L
     val runnable = Runnable {
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)

@@ -7,4 +7,5 @@
     <color name="colorBackground_2">#312F51</color>
     <color name="colorError">#FF575D</color>
     <color name="colorText">#FFFFFF</color>
+    <color name="colorNoAccent">#61FFFFFF</color>
 </resources>

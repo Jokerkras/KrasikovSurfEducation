@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KrasikovSurfEducation</string>
+    <string name="hint_login">Логин</string>
+    <string name="hint_password">Пароль</string>
+    <string name="text_button_login">ВОЙТИ</string>
+    <string name="password_validate_text">Пароль должен содержать 6 символов</string>
 </resources>

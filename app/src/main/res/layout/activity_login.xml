@@ -1,13 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:gravity="center">
+              android:gravity="center_horizontal">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login will be here"/>
+    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+            android:id="@+id/field_boxes_login"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/margin_top_text_fields_login"
+            app:labelText="@string/hint_login"
+            style="@style/TextFieldBoxesAuth">
 
-</LinearLayout>
+        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                android:id="@+id/extended_edit_text_login"
+                android:layout_width="match_parent"
+                android:inputType="phone"
+                android:layout_height="match_parent"/>
+    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+            android:id="@+id/field_boxes_password"
+            android:layout_below="@+id/field_boxes_login"
+            android:layout_marginTop="@dimen/margin_top_text_fields_password"
+            android:layout_height="78dp"
+            app:labelText="@string/hint_password"
+            app:endIcon="@drawable/ic_eye_off"
+            app:helperText="@string/password_validate_text"
+            app:helperTextColor="@color/colorText"
+            app:minCharacters="6"
+            app:maxCharacters="6"
+            app:mCounterTextColor="@color/colorBackground_1"
+            style="@style/TextFieldBoxesAuth">
+
+        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                android:id="@+id/extended_edit_text_password"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="match_parent"/>
+    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+    <FrameLayout
+            android:id="@+id/button_login"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/margin_bottom_button"
+            style="@style/button">
+            <TextView
+                    android:id="@+id/button_login_text"
+                    android:gravity="center"
+                    android:textColor="@color/colorBackground_1"
+                    android:textSize="@dimen/text_size_button"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/text_button_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/button_login_loader"
+                    android:src="@drawable/loader"
+                    android:scaleType="center"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+    </FrameLayout>
+</RelativeLayout>
