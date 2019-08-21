@@ -27,6 +27,7 @@
         <item name="primaryColor">@color/colorAccent</item>
         <item name="panelBackgroundColor">@color/colorBackground_2</item>
         <item name="errorColor">@color/colorError</item>
+        <item name="manualValidateError">true</item>
     </style>
     <style name="button">
         <item name="android:layout_width">match_parent</item>

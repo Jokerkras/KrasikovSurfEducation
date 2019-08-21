@@ -47,6 +47,12 @@ class LoginActivity: AppCompatActivity() {
     }
 
     private fun onClickLoginButton() {
+        if (extended_edit_text_login.text.isEmpty() || extended_edit_text_password.text.isEmpty()){
+            if(extended_edit_text_login.text.isEmpty()) field_boxes_login.validate()
+            if(extended_edit_text_password.text.isEmpty()) field_boxes_password.validate()
+            return
+        }
+
         button_login.isEnabled = false
         button_login_text.isVisible = false
         button_login_loader.isVisible = true
