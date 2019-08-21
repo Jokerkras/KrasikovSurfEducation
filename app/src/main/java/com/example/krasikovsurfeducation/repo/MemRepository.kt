@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MemRepository {
+object MemRepository {
     private val retrofit = Retrofit.Builder()
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl("https://demo3161256.mockable.io/")
