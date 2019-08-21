@@ -1,9 +1,10 @@
-package com.example.krasikovsurfeducation
+package com.example.krasikovsurfeducation.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.example.krasikovsurfeducation.R
 
 class SplashActivity : AppCompatActivity() {
 
