@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils.loadAnimation
 import androidx.core.view.isVisible
 import com.example.krasikovsurfeducation.Constants
 import com.example.krasikovsurfeducation.R
+import com.example.krasikovsurfeducation.model.AuthInfoDto
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import com.example.krasikovsurfeducation.repo.MemRepository
 import com.google.android.material.snackbar.Snackbar
@@ -60,19 +61,8 @@ class LoginActivity: AppCompatActivity() {
         button_login_loader.startAnimation(animation)
         val user = LoginUserRequestDto(extended_edit_text_login.text.toString(), extended_edit_text_password.text.toString())
 
-        MemRepository.login(user)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                stopLoading()
-                Log.d("myOut", it.toString())
-                val editor = sharedPref.edit()
-                editor.putString(Constants.ACCESS_TOKEN, it.accessToken)
-                editor.putInt(Constants.ID, it.userInfo.id)
-                editor.putString(Constants.USERNAME, it.userInfo.username)
-                editor.putString(Constants.FIRST_NAME, it.userInfo.firstname)
-                editor.putString(Constants.LAST_NAME, it.userInfo.lastname)
-                editor.putString(Constants.USER_DESCRIPTION, it.userInfo.userDescription)
+        MemRepository.login(user, {
+                saveUser(it)
 
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
@@ -84,6 +74,19 @@ class LoginActivity: AppCompatActivity() {
                 snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
                 snackBar.show()
             })
+    }
+
+    private fun saveUser(user: AuthInfoDto) {
+        stopLoading()
+        Log.d("myOut", user.toString())
+        val editor = sharedPref.edit()
+        editor.putString(Constants.ACCESS_TOKEN, user.accessToken)
+        editor.putInt(Constants.ID, user.userInfo.id)
+        editor.putString(Constants.USERNAME, user.userInfo.username)
+        editor.putString(Constants.FIRST_NAME, user.userInfo.firstname)
+        editor.putString(Constants.LAST_NAME, user.userInfo.lastname)
+        editor.putString(Constants.USER_DESCRIPTION, user.userInfo.userDescription)
+        editor.apply()
     }
 
     private fun stopLoading() {
