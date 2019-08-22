@@ -9,4 +9,8 @@
     <dimen name="text_size_button">14sp</dimen>
     <dimen name="text_size_text_fields">16sp</dimen>
     <dimen name="text_size_password_helper">12sp</dimen>
+    <dimen name="height_bottom_navigation_view">56dp</dimen>
+    <dimen name="height_toolbar">56dp</dimen>
+    <dimen name="elevation_toolbar">0dp</dimen>
+    <dimen name="text_size_toolbar">20sp</dimen>
 </resources>
