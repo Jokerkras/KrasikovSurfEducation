@@ -4,47 +4,62 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
+import android.os.PersistableBundle
 import android.text.InputType
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import android.view.animation.AnimationUtils.loadAnimation
 import androidx.core.view.isVisible
-import com.example.krasikovsurfeducation.Constants
+import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.AuthInfoDto
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
-import com.example.krasikovsurfeducation.repo.MemRepository
+import com.example.krasikovsurfeducation.repo.LoginRepository
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 
 class LoginActivity: AppCompatActivity() {
-    private var on = false
-    private lateinit var sharedPref: SharedPreferences
+    private val PASSWORD_VISIBLITY = "isPasswordVisible"
+    private var isPasswordVisible = false
+    @Inject lateinit var loginRepo: LoginRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        sharedPref = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE)
+        //sharedPref = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE)
 
-        field_boxes_password.endIconImageButton.setOnClickListener { onClickEye() }
+        (application as BaseApp).getAppComponent().inject(this)
+
+        field_boxes_password.endIconImageButton.setOnClickListener { onPasswordVisibilityBtnClick() }
+        if (savedInstanceState != null) {
+            isPasswordVisible = savedInstanceState.getBoolean(PASSWORD_VISIBLITY)
+            setPasswordVisibility()
+        }
+
 
         button_login.setOnClickListener { onClickLoginButton() }
     }
 
-    private fun onClickEye() {
-        if(on) {
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        outState.putBoolean(PASSWORD_VISIBLITY, isPasswordVisible)
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
+
+    private fun setPasswordVisibility() {
+        if(isPasswordVisible) {
             field_boxes_password.setEndIcon(R.drawable.ic_eye_off)
             extended_edit_text_password.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
         } else {
             field_boxes_password.setEndIcon(R.drawable.ic_eye_on)
             extended_edit_text_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         }
-        on = !on
+    }
+
+    private fun onPasswordVisibilityBtnClick() {
+        setPasswordVisibility()
+        isPasswordVisible = !isPasswordVisible
     }
 
     private fun onClickLoginButton() {
@@ -54,44 +69,46 @@ class LoginActivity: AppCompatActivity() {
             return
         }
 
-        button_login.isEnabled = false
-        button_login_text.isVisible = false
-        button_login_loader.isVisible = true
-        val animation = loadAnimation(applicationContext, R.anim.loader_rotate)
-        button_login_loader.startAnimation(animation)
+        startAnimation()
+
         val user = LoginUserRequestDto(extended_edit_text_login.text.toString(), extended_edit_text_password.text.toString())
 
-        MemRepository.login(user, {
-                saveUser(it)
-
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+        loginRepo.login(user, {
+                stopAnimation()
+            Log.d("myOut", it.toString())
+                openMainActivityAndFinish()
             }, {
                 it.printStackTrace()
-                stopLoading()
-                val snackBar = Snackbar.make(button_login, R.string.login_error_text, Snackbar.LENGTH_LONG)
-                snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
-                snackBar.show()
+                stopAnimation()
+                showError()
             })
     }
 
+    /*
     private fun saveUser(user: AuthInfoDto) {
-        stopLoading()
-        Log.d("myOut", user.toString())
-        val editor = sharedPref.edit()
-        editor.putString(Constants.ACCESS_TOKEN, user.accessToken)
-        editor.putInt(Constants.ID, user.userInfo.id)
-        editor.putString(Constants.USERNAME, user.userInfo.username)
-        editor.putString(Constants.FIRST_NAME, user.userInfo.firstname)
-        editor.putString(Constants.LAST_NAME, user.userInfo.lastname)
-        editor.putString(Constants.USER_DESCRIPTION, user.userInfo.userDescription)
-        editor.apply()
+        stopAnimation()
+    }*/
+
+    private fun startAnimation() {
+        button_login.isEnabled = false
+        button_login_text.isVisible = false
+        progressBar.isVisible = true
     }
 
-    private fun stopLoading() {
-        button_login_loader.clearAnimation()
-        button_login_loader.isVisible = false
+    private fun openMainActivityAndFinish() {
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun showError() {
+        val snackBar = Snackbar.make(button_login, R.string.login_error_text, Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
+        snackBar.show()
+    }
+
+    private fun stopAnimation() {
+        progressBar.isVisible = false
         button_login_text.isVisible = true
         button_login.isEnabled = true
     }

@@ -5,17 +5,11 @@ import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-object MemRepository {
-    private val retrofit = Retrofit.Builder()
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .baseUrl("https://demo3161256.mockable.io/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+class LoginRepository  @Inject constructor(val retrofit: Retrofit, val userStorage: UserStorage){
 
-    private val memApi = retrofit.create(MemApi::class.java)
+    private val memApi = retrofit.create(LoginApi::class.java)
 
     fun login(loginUserRequestDto: LoginUserRequestDto,
               onSuccess: (AuthInfoDto) -> Unit,
@@ -24,6 +18,8 @@ object MemRepository {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
+                userStorage.saveAccessToken(it.accessToken)
+                userStorage.saveUserInfo(it.userInfo)
                 onSuccess(it)
             }, {
                 onError(it)
