@@ -27,11 +27,6 @@ class LoginActivity: AppCompatActivity() {
         (application as BaseApp).getAppComponent().inject(this)
 
         field_boxes_password.endIconImageButton.setOnClickListener { onPasswordVisibilityBtnClick() }
-        if (savedInstanceState != null) {
-            isPasswordVisible = savedInstanceState.getBoolean(PASSWORD_VISIBLITY)
-            setPasswordVisibility()
-        }
-
 
         button_login.setOnClickListener { onClickLoginButton() }
     }
@@ -39,6 +34,12 @@ class LoginActivity: AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         outState.putBoolean(PASSWORD_VISIBLITY, isPasswordVisible)
         super.onSaveInstanceState(outState, outPersistentState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        isPasswordVisible = savedInstanceState.getBoolean(PASSWORD_VISIBLITY)
+        setPasswordVisibility()
     }
 
     private fun setPasswordVisibility() {
