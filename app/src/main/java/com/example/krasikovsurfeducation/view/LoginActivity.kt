@@ -4,21 +4,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.InputType
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_login.*
 import androidx.core.view.isVisible
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
-import com.example.krasikovsurfeducation.repo.LoginRepository
+import com.example.krasikovsurfeducation.view.intr.LoginView
+import com.example.krasikovsurfeducation.view.presenter.LoginPresenter
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_login.*
+import moxy.MvpAppCompatActivity
 import javax.inject.Inject
 
 
-class LoginActivity: AppCompatActivity() {
+class LoginActivity: MvpAppCompatActivity(), LoginView {
+    @Inject lateinit var loginPresenter: LoginPresenter
+
     private val PASSWORD_VISIBLITY = "isPasswordVisible"
     private var isPasswordVisible = false
-    @Inject lateinit var loginRepo: LoginRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,19 +69,25 @@ class LoginActivity: AppCompatActivity() {
 
         startAnimation()
 
+        startLogin()
+    }
+
+    override fun startLogin() {
         val user = LoginUserRequestDto(extended_edit_text_login.text.toString(), extended_edit_text_password.text.toString())
 
-        loginRepo.login(user, {
+        loginPresenter.startLogin(user,
+            {
                 stopAnimation()
                 openMainActivityAndFinish()
-            }, {
+            },
+            {
                 it.printStackTrace()
                 stopAnimation()
                 showError()
             })
     }
 
-    private fun startAnimation() {
+    override fun startAnimation() {
         button_login.isEnabled = false
         button_login_text.isVisible = false
         progressBar.isVisible = true
@@ -90,13 +99,13 @@ class LoginActivity: AppCompatActivity() {
         finish()
     }
 
-    private fun showError() {
+    override fun showError() {
         val snackBar = Snackbar.make(button_login, R.string.login_error_text, Snackbar.LENGTH_LONG)
         snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
         snackBar.show()
     }
 
-    private fun stopAnimation() {
+    override fun stopAnimation() {
         progressBar.isVisible = false
         button_login_text.isVisible = true
         button_login.isEnabled = true
