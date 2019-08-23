@@ -1,8 +1,6 @@
 package com.example.krasikovsurfeducation.di.module
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import com.example.krasikovsurfeducation.repo.UserStorage
 import dagger.Module
 import dagger.Provides

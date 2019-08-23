@@ -1,18 +1,14 @@
 package com.example.krasikovsurfeducation.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.InputType
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import androidx.core.view.isVisible
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
-import com.example.krasikovsurfeducation.model.AuthInfoDto
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import com.example.krasikovsurfeducation.repo.LoginRepository
 import com.google.android.material.snackbar.Snackbar
@@ -27,8 +23,6 @@ class LoginActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        //sharedPref = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE)
 
         (application as BaseApp).getAppComponent().inject(this)
 
@@ -50,7 +44,7 @@ class LoginActivity: AppCompatActivity() {
     private fun setPasswordVisibility() {
         if(isPasswordVisible) {
             field_boxes_password.setEndIcon(R.drawable.ic_eye_off)
-            extended_edit_text_password.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            extended_edit_text_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         } else {
             field_boxes_password.setEndIcon(R.drawable.ic_eye_on)
             extended_edit_text_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
@@ -75,7 +69,6 @@ class LoginActivity: AppCompatActivity() {
 
         loginRepo.login(user, {
                 stopAnimation()
-            Log.d("myOut", it.toString())
                 openMainActivityAndFinish()
             }, {
                 it.printStackTrace()
@@ -83,11 +76,6 @@ class LoginActivity: AppCompatActivity() {
                 showError()
             })
     }
-
-    /*
-    private fun saveUser(user: AuthInfoDto) {
-        stopAnimation()
-    }*/
 
     private fun startAnimation() {
         button_login.isEnabled = false
