@@ -1,13 +1,13 @@
 package com.example.krasikovsurfeducation.view
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.krasikovsurfeducation.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import moxy.MvpAppCompatActivity
 
-class MainActivity: AppCompatActivity() {
+class MainActivity: MvpAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

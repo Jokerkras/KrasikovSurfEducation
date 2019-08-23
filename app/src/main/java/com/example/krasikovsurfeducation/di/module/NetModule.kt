@@ -1,8 +1,7 @@
 package com.example.krasikovsurfeducation.di.module
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
+import com.example.krasikovsurfeducation.repo.LoginRepository
 import com.example.krasikovsurfeducation.repo.UserStorage
 import dagger.Module
 import dagger.Provides
@@ -28,7 +27,9 @@ class NetModule(val app: Application) {
 
     @Provides
     @Singleton
-    fun provideUserManage(): UserStorage {
-        return UserStorage(app)
-    }
+    fun provideUserManage(): UserStorage = UserStorage(app)
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(): LoginRepository = LoginRepository(provideRetrofit(), provideUserManage())
 }
