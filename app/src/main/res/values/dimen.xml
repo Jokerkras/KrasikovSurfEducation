@@ -13,4 +13,8 @@
     <dimen name="height_toolbar">56dp</dimen>
     <dimen name="elevation_toolbar">0dp</dimen>
     <dimen name="text_size_toolbar">20sp</dimen>
+    <dimen name="corner_radius_mem_card">4dp</dimen>
+    <dimen name="text_size_memm_card_title">12sp</dimen>
+    <dimen name="margin_mem_card_icons">14dp</dimen>
+    <dimen name="margin_mem_card_title">10dp</dimen>
 </resources>
