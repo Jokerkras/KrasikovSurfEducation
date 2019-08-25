@@ -11,7 +11,7 @@ class MemRepository @Inject constructor(val retrofit: Retrofit, val userStorage:
     private val memApi = retrofit.create(MemApi::class.java)
 
 
-    fun mem(onSuccess: (List<MemDto>) -> Unit,
+    fun getMemList(onSuccess: (List<MemDto>) -> Unit,
             onError: (Throwable) -> Unit) {
         memApi.memes(userStorage.getAccessToken())
             .observeOn(AndroidSchedulers.mainThread())

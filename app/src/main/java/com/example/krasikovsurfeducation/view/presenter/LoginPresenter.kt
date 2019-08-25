@@ -11,16 +11,17 @@ import moxy.MvpPresenter
 import javax.inject.Inject
 
 @InjectViewState
-class LoginPresenter @Inject constructor(val loginRepo: LoginRepository, val memPresenter: MemRepository): MvpPresenter<LoginView>() {
+class LoginPresenter @Inject constructor(val loginRepo: LoginRepository): MvpPresenter<LoginView>() {
 
     fun startLogin(
-        loginUserRequestDto: LoginUserRequestDto,
-        onSuccess: (AuthInfoDto) -> Unit,
-        onError: (Throwable) -> Unit) {
+        loginUserRequestDto: LoginUserRequestDto) {
         loginRepo.login(loginUserRequestDto, {
-            onSuccess(it)
+            viewState.stopAnimation()
+            viewState.openMainActivityAndFinish()
         }, {
-            onError(it)
+            it.printStackTrace()
+            viewState.stopAnimation()
+            viewState.showError()
         })
 
     }

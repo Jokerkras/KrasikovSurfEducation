@@ -13,10 +13,10 @@ class MainActivity: MvpAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        toolBar.title = resources.getString(R.string.mem_list_title)
         setSupportActionBar(toolBar)
         bottomNavigationView.setOnNavigationItemSelectedListener (mOnNavigationItemSelectedListener)
         toolBar.menu.clear()
-        toolBar.title = resources.getString(R.string.mem_list_title)
         openFragment(MemListFragment.newInstance())
     }
 
