@@ -75,16 +75,8 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
     override fun startLogin() {
         val user = LoginUserRequestDto(extended_edit_text_login.text.toString(), extended_edit_text_password.text.toString())
 
-        loginPresenter.startLogin(user,
-            {
-                stopAnimation()
-                openMainActivityAndFinish()
-            },
-            {
-                it.printStackTrace()
-                stopAnimation()
-                showError()
-            })
+        loginPresenter.startLogin(user)
+        openMainActivityAndFinish()
     }
 
     override fun startAnimation() {
@@ -93,7 +85,7 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
         progressBar.isVisible = true
     }
 
-    private fun openMainActivityAndFinish() {
+    override fun openMainActivityAndFinish() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()

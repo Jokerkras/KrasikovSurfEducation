@@ -7,4 +7,5 @@
     <string name="login_error_text">Вы ввели не верные данные.\nПопробуйте еще раз</string>
     <string name="nothing">nothing</string>
     <string name="mem_list_title">Популярные мемы</string>
+    <string name="bad_connection_error">Отсутсвует интернет-соединение\nПопробуйте позже</string>
 </resources>

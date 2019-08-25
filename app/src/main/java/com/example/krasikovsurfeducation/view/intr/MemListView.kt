@@ -7,4 +7,5 @@ interface MemListView: MvpView {
     fun addMemToFavorite()
     fun removeMemFromFavorite()
     fun shareMem()
+    fun showError()
 }
