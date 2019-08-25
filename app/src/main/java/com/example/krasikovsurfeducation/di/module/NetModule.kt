@@ -2,6 +2,7 @@ package com.example.krasikovsurfeducation.di.module
 
 import android.app.Application
 import com.example.krasikovsurfeducation.repo.LoginRepository
+import com.example.krasikovsurfeducation.repo.MemRepository
 import com.example.krasikovsurfeducation.repo.UserStorage
 import dagger.Module
 import dagger.Provides
@@ -32,4 +33,8 @@ class NetModule(val app: Application) {
     @Provides
     @Singleton
     fun provideLoginRepository(): LoginRepository = LoginRepository(provideRetrofit(), provideUserManage())
+
+    @Provides
+    @Singleton
+    fun provideMemRepository(): MemRepository = MemRepository(provideRetrofit(), provideUserManage())
 }
