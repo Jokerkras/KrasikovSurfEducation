@@ -1,5 +1,6 @@
 package com.example.krasikovsurfeducation.di.component
 
+import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.di.module.MVPModule
 import com.example.krasikovsurfeducation.di.module.NetModule
 import com.example.krasikovsurfeducation.repo.LoginRepository
@@ -13,4 +14,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(loginActivity: LoginActivity)
     fun inject(memListFragment: MemListFragment)
+    fun inject(baseApp: BaseApp)
 }

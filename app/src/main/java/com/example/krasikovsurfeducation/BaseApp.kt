@@ -6,14 +6,17 @@ import com.example.krasikovsurfeducation.di.component.DaggerAppComponent
 import com.example.krasikovsurfeducation.di.module.NetModule
 
 class BaseApp: Application() {
-    private lateinit var mAppComponent: AppComponent
+
+    val mAppComponent: AppComponent by lazy {
+        DaggerAppComponent.builder()
+            .netModule(NetModule(this))
+            .build()
+    }
 
     override fun onCreate() {
         super.onCreate()
 
-        mAppComponent = DaggerAppComponent.builder()
-            .netModule(NetModule(this))
-            .build()
+        mAppComponent.inject(this)
     }
 
     fun getAppComponent(): AppComponent = mAppComponent

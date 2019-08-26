@@ -14,15 +14,15 @@ import javax.inject.Inject
 class LoginPresenter @Inject constructor(val loginRepo: LoginRepository): MvpPresenter<LoginView>() {
 
     fun startLogin(
-        loginUserRequestDto: LoginUserRequestDto) {
+        loginUserRequestDto: LoginUserRequestDto,
+        onSuccess: (AuthInfoDto) -> Unit,
+        onFailure: (Throwable) -> Unit
+        ) {
         loginRepo.login(loginUserRequestDto, {
-            viewState.stopAnimation()
-            viewState.openMainActivityAndFinish()
+            onSuccess(it)
         }, {
             it.printStackTrace()
-            viewState.stopAnimation()
-            viewState.showError()
+            onFailure(it)
         })
-
     }
 }

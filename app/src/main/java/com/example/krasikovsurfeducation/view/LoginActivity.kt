@@ -22,13 +22,11 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
     private val PASSWORD_VISIBLITY = "isPasswordVisible"
     private var isPasswordVisible = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         (application as BaseApp).getAppComponent().inject(this)
-
         field_boxes_password.endIconImageButton.setOnClickListener { onPasswordVisibilityBtnClick() }
 
         button_login.setOnClickListener { onClickLoginButton() }
@@ -67,16 +65,20 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
             return
         }
 
-        startAnimation()
-
         startLogin()
     }
 
     override fun startLogin() {
         val user = LoginUserRequestDto(extended_edit_text_login.text.toString(), extended_edit_text_password.text.toString())
-
-        loginPresenter.startLogin(user)
-        openMainActivityAndFinish()
+        startAnimation()
+        loginPresenter.startLogin(user,
+            {
+                stopAnimation()
+                openMainActivityAndFinish()
+            }, {
+                stopAnimation()
+                showError()
+            })
     }
 
     override fun startAnimation() {
