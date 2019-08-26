@@ -1,5 +1,6 @@
 package com.example.krasikovsurfeducation.repo
 
+import android.util.Log
 import com.example.krasikovsurfeducation.model.MemDto
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,6 +18,7 @@ class MemRepository @Inject constructor(val retrofit: Retrofit, val userStorage:
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
+                Log.d("myOut", it.toString())
                 onSuccess(it)
             }, {
                 onError(it)

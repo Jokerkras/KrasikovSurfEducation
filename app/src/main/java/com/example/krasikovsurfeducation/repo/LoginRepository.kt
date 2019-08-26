@@ -20,6 +20,7 @@ class LoginRepository  @Inject constructor(val retrofit: Retrofit, val userStora
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
+                Log.d("myOut", it.toString())
                 userStorage.saveAccessToken(it.accessToken)
                 userStorage.saveUserInfo(it.userInfo)
                 onSuccess(it)

@@ -1,6 +1,7 @@
 package com.example.krasikovsurfeducation.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MemDto (
     @SerializedName("id") val id: Long,
@@ -10,4 +11,4 @@ data class MemDto (
     @SerializedName("createdDate") val createdDate: Long,
     @SerializedName("photoUtl") val photoUtl: String
 
-)
+) : Serializable
