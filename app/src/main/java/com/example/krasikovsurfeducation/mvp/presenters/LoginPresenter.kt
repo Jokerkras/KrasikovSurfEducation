@@ -1,11 +1,9 @@
-package com.example.krasikovsurfeducation.view.presenter
+package com.example.krasikovsurfeducation.mvp.presenters
 
-import android.util.Log
 import com.example.krasikovsurfeducation.model.AuthInfoDto
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import com.example.krasikovsurfeducation.repo.LoginRepository
-import com.example.krasikovsurfeducation.repo.MemRepository
-import com.example.krasikovsurfeducation.view.intr.LoginView
+import com.example.krasikovsurfeducation.mvp.views.LoginView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject

@@ -15,7 +15,7 @@
             android:roundIcon="@drawable/ic_splash"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".view.SplashActivity" android:theme="@style/NoActionBarTheme">
+        <activity android:name=".mvp.activities.SplashActivity" android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -23,12 +23,12 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".view.LoginActivity"
+                android:name=".mvp.activities.LoginActivity"
                 android:theme="@style/NoActionBarTheme"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-                android:name=".view.MainActivity"
+                android:name=".mvp.activities.MainActivity"
                 android:theme="@style/AppTheme">
 
         </activity>

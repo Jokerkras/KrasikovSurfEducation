@@ -15,7 +15,6 @@ class BaseApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         mAppComponent.inject(this)
     }
 

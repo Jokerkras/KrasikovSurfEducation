@@ -2,28 +2,40 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/refresh_layout_mem_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_mem_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <FrameLayout
+                android:id="@+id/progressBar_mem_download"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center">
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_mem_list"
+                android:visibility="invisible"
+                android:background="#33000000">
+            <ProgressBar
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+            </ProgressBar>
+        </FrameLayout>
+        <TextView
+                android:id="@+id/text_error_first_connection"
+                android:text="@string/text_fail_ferst_connection"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <FrameLayout
-            android:id="@+id/progressBar_mem_download"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            android:background="#33000000">
-        <ProgressBar
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-        </ProgressBar>
-    </FrameLayout>
+                android:layout_height="match_parent"
+                />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

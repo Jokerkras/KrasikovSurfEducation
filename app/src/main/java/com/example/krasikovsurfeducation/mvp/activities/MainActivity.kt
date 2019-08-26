@@ -1,4 +1,4 @@
-package com.example.krasikovsurfeducation.view
+package com.example.krasikovsurfeducation.mvp.activities
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.example.krasikovsurfeducation.view.intr
+package com.example.krasikovsurfeducation.mvp.views
 
 import moxy.MvpView
 

@@ -9,7 +9,14 @@ import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.MemDto
 import kotlinx.android.synthetic.main.cardview_mem_item.view.*
 
-class MemAdapter(private val memList: List<MemDto>): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+class MemAdapter(private val memList: ArrayList<MemDto>): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+
+    fun refreshMemList(list: List<MemDto>) {
+        memList.clear()
+        memList.addAll(list)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview_mem_item, parent, false)
         return MemHolder(view)
@@ -22,6 +29,8 @@ class MemAdapter(private val memList: List<MemDto>): RecyclerView.Adapter<MemAda
     override fun onBindViewHolder(holder: MemHolder, position: Int) {
         val mem = memList[position]
         holder.title.text = mem.title
+        if(mem.isFavorite) holder.btnFavotite.setImageResource(R.drawable.ic_added_to_favorite)
+            else holder.btnFavotite.setImageResource(R.drawable.ic_not_in_favorite)
         Glide.with(holder.memImage).load(mem.photoUtl).into(holder.memImage)
     }
 

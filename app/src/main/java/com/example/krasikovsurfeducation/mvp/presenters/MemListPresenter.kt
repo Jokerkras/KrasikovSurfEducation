@@ -1,9 +1,6 @@
-package com.example.krasikovsurfeducation.view.presenter
+package com.example.krasikovsurfeducation.mvp.presenters
 
-import com.example.krasikovsurfeducation.model.AuthInfoDto
-import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import com.example.krasikovsurfeducation.model.MemDto
-import com.example.krasikovsurfeducation.repo.LoginRepository
 import com.example.krasikovsurfeducation.repo.MemRepository
 import javax.inject.Inject
 
