@@ -29,6 +29,8 @@ class MemAdapter(private val memList: ArrayList<MemDto>): RecyclerView.Adapter<M
     override fun onBindViewHolder(holder: MemHolder, position: Int) {
         val mem = memList[position]
         holder.title.text = mem.title
+        if(mem.isFavorite) holder.btnFavotite.setImageResource(R.drawable.ic_added_to_favorite)
+            else holder.btnFavotite.setImageResource(R.drawable.ic_not_in_favorite)
         Glide.with(holder.memImage).load(mem.photoUtl).into(holder.memImage)
     }
 
