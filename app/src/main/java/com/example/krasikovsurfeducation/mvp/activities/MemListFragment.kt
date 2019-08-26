@@ -1,20 +1,17 @@
-package com.example.krasikovsurfeducation.view
+package com.example.krasikovsurfeducation.mvp.activities
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.adapter.MemAdapter
 import com.example.krasikovsurfeducation.model.MemDto
-import com.example.krasikovsurfeducation.view.intr.MemListView
-import com.example.krasikovsurfeducation.view.presenter.MemListPresenter
+import com.example.krasikovsurfeducation.mvp.views.MemListView
+import com.example.krasikovsurfeducation.mvp.presenters.MemListPresenter
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_mem_list.*
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
@@ -36,33 +33,52 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
     }
 
     companion object {
-        fun newInstance(): MemListFragment{
+        fun newInstance(): MemListFragment {
             return MemListFragment()
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        refreshList()
-        adapter = MemAdapter(memList)
-        staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView_mem_list.adapter = adapter
-        recyclerView_mem_list.layoutManager = staggeredLayoutManager
+        initMemFragment()
     }
 
     override fun refreshList() {
-        progressBar_mem_download.isVisible = true
         memListPresenter.getMemes({
-            memList.addAll(it)
-            adapter.notifyDataSetChanged()
-            progressBar_mem_download.isVisible = false
+            adapter.refreshMemList(it)
+            refresh_layout_mem_list.isRefreshing = false
         },
         {
             showError()
         })
     }
 
+    fun initMemFragment() {
+        refresh_layout_mem_list.setOnRefreshListener { refreshList() }
+
+        progressBar_mem_download.visibility = View.VISIBLE
+
+        adapter = MemAdapter(memList)
+        staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView_mem_list.adapter = adapter
+        recyclerView_mem_list.layoutManager = staggeredLayoutManager
+
+        memListPresenter.getMemes({
+            progressBar_mem_download.visibility = View.INVISIBLE
+            adapter.refreshMemList(it)
+        },
+            {
+                showErrorOnStart()
+            })
+    }
+
+    fun showErrorOnStart() {
+
+        text_error_first_connection.visibility = View.VISIBLE
+    }
+
     override fun showError() {
+        refresh_layout_mem_list.isRefreshing = false
         val snackBar = Snackbar.make(recyclerView_mem_list, R.string.bad_connection_error, Snackbar.LENGTH_LONG)
         snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
         snackBar.show()

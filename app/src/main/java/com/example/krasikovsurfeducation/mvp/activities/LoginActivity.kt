@@ -1,4 +1,4 @@
-package com.example.krasikovsurfeducation.view
+package com.example.krasikovsurfeducation.mvp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,8 @@ import androidx.core.view.isVisible
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
-import com.example.krasikovsurfeducation.view.intr.LoginView
-import com.example.krasikovsurfeducation.view.presenter.LoginPresenter
+import com.example.krasikovsurfeducation.mvp.views.LoginView
+import com.example.krasikovsurfeducation.mvp.presenters.LoginPresenter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import moxy.MvpAppCompatActivity

@@ -1,4 +1,4 @@
-package com.example.krasikovsurfeducation.view
+package com.example.krasikovsurfeducation.mvp.activities
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ class ProfileFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance(): ProfileFragment{
+        fun newInstance(): ProfileFragment {
             return ProfileFragment()
         }
     }

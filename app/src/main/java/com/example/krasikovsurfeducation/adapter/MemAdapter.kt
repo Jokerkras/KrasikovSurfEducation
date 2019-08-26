@@ -9,7 +9,14 @@ import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.MemDto
 import kotlinx.android.synthetic.main.cardview_mem_item.view.*
 
-class MemAdapter(private val memList: List<MemDto>): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+class MemAdapter(private val memList: ArrayList<MemDto>): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+
+    fun refreshMemList(list: List<MemDto>) {
+        memList.clear()
+        memList.addAll(list)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview_mem_item, parent, false)
         return MemHolder(view)
