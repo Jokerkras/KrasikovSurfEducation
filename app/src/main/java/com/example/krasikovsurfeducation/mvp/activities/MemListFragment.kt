@@ -1,5 +1,6 @@
 package com.example.krasikovsurfeducation.mvp.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +10,18 @@ import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.adapter.MemAdapter
 import com.example.krasikovsurfeducation.model.MemDto
+import com.example.krasikovsurfeducation.mvp.presenters.MemDescriptionPresenter
 import com.example.krasikovsurfeducation.mvp.views.MemListView
 import com.example.krasikovsurfeducation.mvp.presenters.MemListPresenter
+import com.example.krasikovsurfeducation.mvp.views.MemDescriptionView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_mem_list.*
 import moxy.MvpAppCompatFragment
+import moxy.presenter.InjectPresenter
 import javax.inject.Inject
 
-class MemListFragment: MvpAppCompatFragment(), MemListView {
+class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
+
     @Inject lateinit var memListPresenter: MemListPresenter
     lateinit var adapter: MemAdapter
     lateinit var staggeredLayoutManager: StaggeredGridLayoutManager
@@ -58,7 +63,11 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
 
         progressBar_mem_download.visibility = View.VISIBLE
 
-        adapter = MemAdapter(memList)
+        adapter = MemAdapter(memList) {
+            val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
+            intent.putExtra("mem", it)
+            startActivity(intent)
+        }
         staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView_mem_list.adapter = adapter
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
@@ -67,14 +76,18 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
             progressBar_mem_download.visibility = View.INVISIBLE
             adapter.refreshMemList(it)
         },
-            {
-                showErrorOnStart()
-            })
+        {
+            showErrorOnStart()
+        })
     }
 
     fun showErrorOnStart() {
 
         text_error_first_connection.visibility = View.VISIBLE
+    }
+
+    fun openMem(mem: MemDto) {
+
     }
 
     override fun showError() {
@@ -93,6 +106,13 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
     }
 
     override fun shareMem() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    override fun closeMemDescription() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showMem(mem: MemDto) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

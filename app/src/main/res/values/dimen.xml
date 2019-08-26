@@ -17,4 +17,7 @@
     <dimen name="text_size_memm_card_title">12sp</dimen>
     <dimen name="margin_mem_card_icons">14dp</dimen>
     <dimen name="margin_mem_card_title">10dp</dimen>
+    <dimen name="margin_mem_description_toolBar">21dp</dimen>
+    <dimen name="padding_mem_title">16dp</dimen>
+    <dimen name="text_size_mem_decription_title">24sp</dimen>
 </resources>

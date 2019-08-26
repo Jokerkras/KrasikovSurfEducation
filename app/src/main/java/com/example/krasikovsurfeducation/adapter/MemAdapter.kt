@@ -1,5 +1,6 @@
 package com.example.krasikovsurfeducation.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.MemDto
+import com.example.krasikovsurfeducation.mvp.activities.LoginActivity
+import com.example.krasikovsurfeducation.mvp.activities.MemDescriptionActivity
 import kotlinx.android.synthetic.main.cardview_mem_item.view.*
 
-class MemAdapter(private val memList: ArrayList<MemDto>): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+class MemAdapter(private val memList: ArrayList<MemDto>,val itemClick: (mem: MemDto) -> Unit): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+
 
     fun refreshMemList(list: List<MemDto>) {
         memList.clear()
@@ -32,12 +36,19 @@ class MemAdapter(private val memList: ArrayList<MemDto>): RecyclerView.Adapter<M
         if(mem.isFavorite) holder.btnFavotite.setImageResource(R.drawable.ic_added_to_favorite)
             else holder.btnFavotite.setImageResource(R.drawable.ic_not_in_favorite)
         Glide.with(holder.memImage).load(mem.photoUtl).into(holder.memImage)
+        holder.setClickListenter {
+            itemClick(mem)
+        }
     }
 
-    class MemHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MemHolder(val view: View) : RecyclerView.ViewHolder(view){
         val memImage = view.image_view_mem
         val title = view.text_view_mem_title
         val btnFavotite = view.btn_isFavorite
         val btnShare = view.btn_share_mem
+
+        fun setClickListenter( onClick: () -> Unit) {
+            view.setOnClickListener { onClick() }
+        }
     }
 }
