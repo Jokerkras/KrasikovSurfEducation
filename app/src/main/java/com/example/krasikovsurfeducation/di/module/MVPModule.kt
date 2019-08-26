@@ -1,5 +1,6 @@
 package com.example.krasikovsurfeducation.di.module
 
+import com.example.krasikovsurfeducation.dao.MemDao
 import com.example.krasikovsurfeducation.repo.LoginRepository
 import com.example.krasikovsurfeducation.repo.MemRepository
 import com.example.krasikovsurfeducation.mvp.presenters.LoginPresenter
@@ -17,5 +18,5 @@ class MVPModule {
 
     @Provides
     @Singleton
-    fun provideMemListPresenter(memRepository: MemRepository): MemListPresenter = MemListPresenter(memRepository)
+    fun provideMemListPresenter(memRepository: MemRepository, memDao: MemDao): MemListPresenter = MemListPresenter(memRepository, memDao)
 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.adapter.MemAdapter
+import com.example.krasikovsurfeducation.dao.MemDao
 import com.example.krasikovsurfeducation.model.MemDto
 import com.example.krasikovsurfeducation.mvp.presenters.MemDescriptionPresenter
 import com.example.krasikovsurfeducation.mvp.views.MemListView
@@ -72,13 +73,10 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
         recyclerView_mem_list.adapter = adapter
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
 
-        memListPresenter.getMemes({
+        memListPresenter.initMems {
             progressBar_mem_download.visibility = View.INVISIBLE
             adapter.refreshMemList(it)
-        },
-        {
-            showErrorOnStart()
-        })
+        }
     }
 
     fun showErrorOnStart() {

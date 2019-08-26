@@ -3,6 +3,7 @@ package com.example.krasikovsurfeducation
 import android.app.Application
 import com.example.krasikovsurfeducation.di.component.AppComponent
 import com.example.krasikovsurfeducation.di.component.DaggerAppComponent
+import com.example.krasikovsurfeducation.di.module.DatabaseModule
 import com.example.krasikovsurfeducation.di.module.NetModule
 
 class BaseApp: Application() {
@@ -10,6 +11,7 @@ class BaseApp: Application() {
     val mAppComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
             .netModule(NetModule(this))
+            .databaseModule(DatabaseModule(this))
             .build()
     }
 
