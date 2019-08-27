@@ -8,17 +8,18 @@ import com.example.krasikovsurfeducation.di.module.NetModule
 
 class BaseApp: Application() {
 
-    val mAppComponent: AppComponent by lazy {
-        DaggerAppComponent.builder()
+    override fun onCreate() {
+        super.onCreate()
+        mAppComponent = DaggerAppComponent.builder()
             .netModule(NetModule(this))
             .databaseModule(DatabaseModule(this))
             .build()
-    }
-
-    override fun onCreate() {
-        super.onCreate()
         mAppComponent.inject(this)
     }
 
-    fun getAppComponent(): AppComponent = mAppComponent
+    companion object {
+        lateinit var mAppComponent: AppComponent
+
+        fun getAppComponent(): AppComponent = mAppComponent
+    }
 }

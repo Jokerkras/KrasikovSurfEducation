@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".mvp.activities.AddMemFragment">
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar_add_mem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_toolbar"
+            android:background="@color/colorBackground_2"
+            android:theme="@style/ToolBar"
+            android:elevation="@dimen/elevation_toolbar">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+            <TextView
+                    android:id="@+id/btn_create_mem"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/create_mem_text_color"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_create"
+                    android:layout_marginTop="3dp"
+                    android:enabled="false"
+                    android:layout_marginRight="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textLayout_title"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title_hint"
+                    app:counterMaxLength="140"
+                    app:counterEnabled="true"
+                    app:boxBackgroundMode="none"
+                    app:counterOverflowTextAppearance="@style/TextLimitError">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="@dimen/text_size_mem_decription_title" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title_text"
+                    app:counterMaxLength="1000"
+                    app:counterEnabled="true"
+                    app:boxBackgroundMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="@dimen/text_size_normal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                    android:id="@+id/imageView_mem_to_create"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"/>
+            <ImageButton
+                    android:id="@+id/btn_add_image"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_add_image"
+                    android:background="@drawable/btn_add_image_background"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp" />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

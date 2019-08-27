@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.krasikovsurfeducation.dao.MemDao
 import com.example.krasikovsurfeducation.model.MemDto
 
-@Database(entities = [MemDto::class], version = 1, exportSchema = false)
+@Database(entities = [MemDto::class], version = 2, exportSchema = false)
 abstract class MemRoomDatabase: RoomDatabase() {
 
     abstract fun memDao(): MemDao

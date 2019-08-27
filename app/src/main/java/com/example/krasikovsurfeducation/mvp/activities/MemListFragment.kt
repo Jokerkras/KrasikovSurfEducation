@@ -33,8 +33,7 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity?.application as BaseApp).getAppComponent().inject(this)
-
+        BaseApp.getAppComponent().inject(this)
         return inflater.inflate(R.layout.fragment_mem_list, container, false)
     }
 
@@ -60,10 +59,10 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
     }
 
     fun initMemFragment() {
+        toolBar_mem_list.menu.clear()
+        toolBar_mem_list.inflateMenu(R.menu.toolbar_fragment_mem_list_menu)
         refresh_layout_mem_list.setOnRefreshListener { refreshList() }
-
-        progressBar_mem_download.visibility = View.VISIBLE
-
+        //progressBar_mem_download.visibility = View.VISIBLE
         adapter = MemAdapter(memList) {
             val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
             intent.putExtra("mem", it)
@@ -74,13 +73,12 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
 
         memListPresenter.initMems {
-            progressBar_mem_download.visibility = View.INVISIBLE
+            //progressBar_mem_download.visibility = View.INVISIBLE
             adapter.refreshMemList(it)
         }
     }
 
     fun showErrorOnStart() {
-
         text_error_first_connection.visibility = View.VISIBLE
     }
 

@@ -1,5 +1,6 @@
 package com.example.krasikovsurfeducation.mvp.presenters
 
+import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.model.AuthInfoDto
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import com.example.krasikovsurfeducation.repo.LoginRepository
@@ -9,7 +10,13 @@ import moxy.MvpPresenter
 import javax.inject.Inject
 
 @InjectViewState
-class LoginPresenter @Inject constructor(val loginRepo: LoginRepository): MvpPresenter<LoginView>() {
+class LoginPresenter: MvpPresenter<LoginView>() {
+
+    @Inject lateinit var loginRepo: LoginRepository
+
+    init {
+        BaseApp.getAppComponent().inject(this)
+    }
 
     fun startLogin(
         loginUserRequestDto: LoginUserRequestDto,

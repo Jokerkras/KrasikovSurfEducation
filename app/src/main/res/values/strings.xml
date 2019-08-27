@@ -9,4 +9,10 @@
     <string name="mem_list_title">Популярные мемы</string>
     <string name="bad_connection_error">Отсутсвует интернет-соединение\nПопробуйте позже</string>
     <string name="text_fail_ferst_connection">Не удалось загрузить ленту\\nОбновите экран или попробуйте позже</string>
+    <string name="btn_create">СОЗДАТЬ</string>
+    <string name="title_hint">Заголовок</string>
+    <string name="title_dialog">Выбрать фото</string>
+    <string name="from_gallery">Из галереи</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="title_text">Текст</string>
 </resources>
