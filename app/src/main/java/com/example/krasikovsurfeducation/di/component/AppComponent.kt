@@ -6,6 +6,8 @@ import com.example.krasikovsurfeducation.di.module.MVPModule
 import com.example.krasikovsurfeducation.di.module.NetModule
 import com.example.krasikovsurfeducation.mvp.activities.LoginActivity
 import com.example.krasikovsurfeducation.mvp.activities.MemListFragment
+import com.example.krasikovsurfeducation.mvp.presenters.AddMemPresenter
+import com.example.krasikovsurfeducation.mvp.presenters.LoginPresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,4 +17,6 @@ interface AppComponent {
     fun inject(loginActivity: LoginActivity)
     fun inject(memListFragment: MemListFragment)
     fun inject(baseApp: BaseApp)
+    fun inject(loginPresenter: LoginPresenter)
+    fun inject(addMemPresenter: AddMemPresenter)
 }

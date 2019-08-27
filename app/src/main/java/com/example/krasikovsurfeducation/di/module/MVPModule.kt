@@ -14,7 +14,7 @@ class MVPModule {
 
     @Provides
     @Singleton
-    fun provideLoginPresenter(loginRepo: LoginRepository): LoginPresenter = LoginPresenter(loginRepo)
+    fun provideLoginPresenter(): LoginPresenter = LoginPresenter()
 
     @Provides
     @Singleton

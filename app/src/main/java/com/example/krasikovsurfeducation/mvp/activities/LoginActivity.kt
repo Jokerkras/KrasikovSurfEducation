@@ -13,11 +13,14 @@ import com.example.krasikovsurfeducation.mvp.presenters.LoginPresenter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import moxy.MvpAppCompatActivity
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 
 class LoginActivity: MvpAppCompatActivity(), LoginView {
-    @Inject lateinit var loginPresenter: LoginPresenter
+    @InjectPresenter lateinit var loginPresenter: LoginPresenter
+    fun provideLoginPresenter() = loginPresenter
 
     private val PASSWORD_VISIBLITY = "isPasswordVisible"
     private var isPasswordVisible = false
@@ -25,8 +28,8 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        BaseApp.getAppComponent().inject(this)
 
-        (application as BaseApp).getAppComponent().inject(this)
         field_boxes_password.endIconImageButton.setOnClickListener { onPasswordVisibilityBtnClick() }
 
         button_login.setOnClickListener { onClickLoginButton() }

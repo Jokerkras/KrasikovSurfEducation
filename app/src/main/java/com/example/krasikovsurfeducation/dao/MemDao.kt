@@ -10,6 +10,9 @@ interface MemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMems(mems: List<MemDto>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMem(mem: MemDto)
+
     @Update
     fun updateUsers(mems: List<MemDto>)
 
