@@ -18,16 +18,19 @@ class LoginPresenter: MvpPresenter<LoginView>() {
         BaseApp.getAppComponent().inject(this)
     }
 
-    fun startLogin(
-        loginUserRequestDto: LoginUserRequestDto,
-        onSuccess: (AuthInfoDto) -> Unit,
-        onFailure: (Throwable) -> Unit
-        ) {
+    fun startLogin(loginUserRequestDto: LoginUserRequestDto) {
+        viewState.startAnimation()
         loginRepo.login(loginUserRequestDto, {
-            onSuccess(it)
+            viewState.stopAnimation()
+            viewState.openMainActivityAndFinish()
         }, {
             it.printStackTrace()
-            onFailure(it)
+            viewState.stopAnimation()
+            viewState.showError()
         })
+    }
+
+    fun onClickPasswordVisibility() {
+        viewState.setPasswordVisibility()
     }
 }

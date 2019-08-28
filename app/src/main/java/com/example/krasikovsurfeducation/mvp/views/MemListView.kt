@@ -1,11 +1,13 @@
 package com.example.krasikovsurfeducation.mvp.views
 
+import com.example.krasikovsurfeducation.model.MemDto
 import moxy.MvpView
 
 interface MemListView: MvpView {
-    fun refreshList()
+    fun refreshList(it: List<MemDto>)
     fun addMemToFavorite()
     fun removeMemFromFavorite()
     fun shareMem()
-    fun showError()
+    fun showBadConnectionError()
+    fun stopRefreshing()
 }

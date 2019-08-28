@@ -18,5 +18,5 @@ class MVPModule {
 
     @Provides
     @Singleton
-    fun provideMemListPresenter(memRepository: MemRepository, memDao: MemDao): MemListPresenter = MemListPresenter(memRepository, memDao)
+    fun provideMemListPresenter(): MemListPresenter = MemListPresenter()
 }

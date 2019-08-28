@@ -29,21 +29,7 @@ class MainActivity: MvpAppCompatActivity(), MainActivityView {
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
-        when(it.itemId) {
-            R.id.btn_mem_list -> {
-                mainActivityPresenter.openMemList()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.btn_add_mem -> {
-                mainActivityPresenter.openAddMem()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.btn_profile -> {
-                mainActivityPresenter.openProfile()
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
+        mainActivityPresenter.onNavigationViewItemClick(it)
     }
 
     override fun openMemList() {
@@ -58,7 +44,7 @@ class MainActivity: MvpAppCompatActivity(), MainActivityView {
         openFragment(profileFragment)
     }
 
-    fun openFragment(fragment: Fragment) {
+    private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container_for_fragment, fragment)
         transaction.commit()
