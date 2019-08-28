@@ -7,4 +7,6 @@ import moxy.MvpView
 interface ProfileVIew: MvpView {
     fun setMems(mems: List<MemDto>)
     fun setUser(user: UserInfo)
+    fun logout()
+    fun showConnectionError(badConnectionError: Int)
 }

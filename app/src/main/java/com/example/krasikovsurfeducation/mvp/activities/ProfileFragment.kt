@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.krasikovsurfeducation.R
@@ -13,6 +14,7 @@ import com.example.krasikovsurfeducation.model.MemDto
 import com.example.krasikovsurfeducation.model.UserInfo
 import com.example.krasikovsurfeducation.mvp.presenters.ProfilePresenter
 import com.example.krasikovsurfeducation.mvp.views.ProfileVIew
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_mem_list.*
 import kotlinx.android.synthetic.main.fragment_mem_list.recyclerView_mem_list
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -48,6 +50,19 @@ class ProfileFragment: MvpAppCompatFragment(), ProfileVIew {
         super.onActivityCreated(savedInstanceState)
 
         toolBar_small.inflateMenu(R.menu.menu_profile)
+        toolBar_small.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.btn_logout -> {
+                    profilePresenter.logout(context!!)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.btn_about -> {
+                    Toast.makeText(context, "SurfEducationProject", Toast.LENGTH_LONG).show()
+                    return@setOnMenuItemClickListener true
+                }
+            }
+            false
+        }
     }
 
     override fun setMems(mems: List<MemDto>) {
@@ -57,5 +72,17 @@ class ProfileFragment: MvpAppCompatFragment(), ProfileVIew {
     override fun setUser(user: UserInfo) {
         textView_large_login.text = user.username
         textView_large_description.text = user.userDescription
+    }
+
+    override fun logout() {
+        val intent = Intent(context, LoginActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
+    }
+
+    override fun showConnectionError(badConnectionError: Int) {
+        val snackBar = Snackbar.make(recyclerView_mem_list, R.string.bad_connection_error, Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
+        snackBar.show()
     }
 }
