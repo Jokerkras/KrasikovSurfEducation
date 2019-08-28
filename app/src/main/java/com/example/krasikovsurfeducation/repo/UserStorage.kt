@@ -19,10 +19,6 @@ class UserStorage  @Inject constructor(val app: Application) {
     val LAST_NAME = "lastName"
     val USER_DESCRIPTION = "userDescription"
 
-    init {
-        count += 1
-    }
-
     fun saveAccessToken(token: String) {
         val editor = sharedPreferences.edit()
         editor.putString(ACCESS_TOKEN, token)
@@ -37,13 +33,9 @@ class UserStorage  @Inject constructor(val app: Application) {
         editor.putString(LAST_NAME, userInfo.lastname)
         editor.putString(USER_DESCRIPTION, userInfo.userDescription)
         editor.apply()
-
-        Log.d("myOut", count.toString())
     }
 
     fun getAccessToken(): String {
-        Log.d("myOut", count.toString())
-
         return sharedPreferences.getString(ACCESS_TOKEN, "")?: ""
     }
 
@@ -58,7 +50,9 @@ class UserStorage  @Inject constructor(val app: Application) {
         return user
     }
 
-    companion object {
-        var count = 0
+    fun clearUser() {
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
     }
 }

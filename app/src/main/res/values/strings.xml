@@ -17,4 +17,7 @@
     <string name="title_text">Текст</string>
     <string name="text_about">О приложении</string>
     <string name="text_logout">Выйти</string>
+    <string name="title_logout_dialog">Действительно хотите выйти?</string>
+    <string name="logout_cancel">ОТМЕНА</string>
+    <string name="logout_yes">ВЫЙТИ</string>
 </resources>
