@@ -21,9 +21,9 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import javax.inject.Inject
 
-class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
+class MemListFragment: MvpAppCompatFragment(), MemListView {
 
-    @Inject lateinit var memListPresenter: MemListPresenter
+    @InjectPresenter lateinit var memListPresenter: MemListPresenter
     lateinit var adapter: MemAdapter
     lateinit var staggeredLayoutManager: StaggeredGridLayoutManager
     var memList: ArrayList<MemDto> = arrayListOf()
@@ -37,37 +37,27 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
         return inflater.inflate(R.layout.fragment_mem_list, container, false)
     }
 
-    companion object {
-        fun newInstance(): MemListFragment {
-            return MemListFragment()
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initMemFragment()
     }
 
-    override fun refreshList() {
-        memListPresenter.getMemes({
-            adapter.refreshMemList(it)
-            refresh_layout_mem_list.isRefreshing = false
-        },
-        {
-            showError()
-        })
+
+
+    override fun refreshList(it: List<MemDto>) {
+        adapter.refreshMemList(it)
     }
 
+    override fun stopRefreshing() {
+        refresh_layout_mem_list.isRefreshing = false
+    }
     fun initMemFragment() {
         toolBar_mem_list.menu.clear()
         toolBar_mem_list.inflateMenu(R.menu.toolbar_fragment_mem_list_menu)
-        refresh_layout_mem_list.setOnRefreshListener { refreshList() }
+
+        refresh_layout_mem_list.setOnRefreshListener { memListPresenter.refreshList() }
         //progressBar_mem_download.visibility = View.VISIBLE
-        adapter = MemAdapter(memList) {
-            val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
-            intent.putExtra("mem", it)
-            startActivity(intent)
-        }
+        adapter = MemAdapter(memList) { openMem(it) }
         staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView_mem_list.adapter = adapter
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
@@ -83,11 +73,12 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
     }
 
     fun openMem(mem: MemDto) {
-
+        val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
+        intent.putExtra("mem", mem)
+        startActivity(intent)
     }
 
-    override fun showError() {
-        refresh_layout_mem_list.isRefreshing = false
+    override fun showBadConnectionError() {
         val snackBar = Snackbar.make(recyclerView_mem_list, R.string.bad_connection_error, Snackbar.LENGTH_LONG)
         snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
         snackBar.show()
@@ -102,13 +93,6 @@ class MemListFragment: MvpAppCompatFragment(), MemListView, MemDescriptionView {
     }
 
     override fun shareMem() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    override fun closeMemDescription() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showMem(mem: MemDto) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

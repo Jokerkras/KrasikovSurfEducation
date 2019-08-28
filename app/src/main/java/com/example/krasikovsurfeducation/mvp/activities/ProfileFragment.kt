@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.bumptech.glide.Glide
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.adapter.MemAdapter
 import com.example.krasikovsurfeducation.model.MemDto
@@ -15,7 +14,6 @@ import com.example.krasikovsurfeducation.model.UserInfo
 import com.example.krasikovsurfeducation.mvp.presenters.ProfilePresenter
 import com.example.krasikovsurfeducation.mvp.views.ProfileVIew
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_mem_list.*
 import kotlinx.android.synthetic.main.fragment_mem_list.recyclerView_mem_list
 import kotlinx.android.synthetic.main.fragment_profile.*
 import moxy.MvpAppCompatFragment

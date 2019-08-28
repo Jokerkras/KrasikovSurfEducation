@@ -20,7 +20,6 @@ import javax.inject.Inject
 
 class LoginActivity: MvpAppCompatActivity(), LoginView {
     @InjectPresenter lateinit var loginPresenter: LoginPresenter
-    fun provideLoginPresenter() = loginPresenter
 
     private val PASSWORD_VISIBLITY = "isPasswordVisible"
     private var isPasswordVisible = false
@@ -30,7 +29,7 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
         setContentView(R.layout.activity_login)
         BaseApp.getAppComponent().inject(this)
 
-        field_boxes_password.endIconImageButton.setOnClickListener { onPasswordVisibilityBtnClick() }
+        field_boxes_password.endIconImageButton.setOnClickListener { loginPresenter.onClickPasswordVisibility() }
 
         button_login.setOnClickListener { onClickLoginButton() }
     }
@@ -46,7 +45,7 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
         setPasswordVisibility()
     }
 
-    private fun setPasswordVisibility() {
+    override fun setPasswordVisibility() {
         if(isPasswordVisible) {
             field_boxes_password.setEndIcon(R.drawable.ic_eye_off)
             extended_edit_text_password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
@@ -54,10 +53,6 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
             field_boxes_password.setEndIcon(R.drawable.ic_eye_on)
             extended_edit_text_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         }
-    }
-
-    private fun onPasswordVisibilityBtnClick() {
-        setPasswordVisibility()
         isPasswordVisible = !isPasswordVisible
     }
 
@@ -67,21 +62,12 @@ class LoginActivity: MvpAppCompatActivity(), LoginView {
             if(extended_edit_text_password.text.isEmpty()) field_boxes_password.validate()
             return
         }
-
         startLogin()
     }
 
     override fun startLogin() {
         val user = LoginUserRequestDto(extended_edit_text_login.text.toString(), extended_edit_text_password.text.toString())
-        startAnimation()
-        loginPresenter.startLogin(user,
-            {
-                stopAnimation()
-                openMainActivityAndFinish()
-            }, {
-                stopAnimation()
-                showError()
-            })
+        loginPresenter.startLogin(user)
     }
 
     override fun startAnimation() {

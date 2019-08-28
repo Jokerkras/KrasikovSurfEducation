@@ -7,5 +7,6 @@ interface LoginView: MvpView {
     fun startAnimation()
     fun stopAnimation()
     fun showError()
+    fun setPasswordVisibility()
     fun openMainActivityAndFinish()
 }
