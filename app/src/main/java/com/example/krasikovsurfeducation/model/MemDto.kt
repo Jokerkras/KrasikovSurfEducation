@@ -13,5 +13,6 @@ data class MemDto (
     @ColumnInfo(name = "description") @SerializedName("description") var description: String,
     @ColumnInfo(name = "isFavorite") @SerializedName("isFavorite") var isFavorite: Boolean,
     @ColumnInfo(name = "createdDate") @SerializedName("createdDate") var createdDate: Long,
-    @ColumnInfo(name = "photoUtl") @SerializedName("photoUtl") var photoUtl: String
+    @ColumnInfo(name = "photoUtl") @SerializedName("photoUtl") var photoUtl: String,
+    @ColumnInfo(name = "isMy") @SerializedName("isMy") var isMy: Boolean
 ) : Serializable

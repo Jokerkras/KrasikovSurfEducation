@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBar_profile"
+    <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_toolbar"
-            android:background="@color/colorBackground_2"
-            android:theme="@style/ToolBar"
-            app:title=""
-            android:elevation="@dimen/elevation_toolbar"/>
-    <TextView
-            android:layout_width="wrap_content"
+            android:layout_height="@dimen/tall_tiilbar">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_large"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:expandedTitleGravity="top"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageView_large_avatar"
+                        android:layout_height="64dp"
+                        android:layout_width="64dp"
+                        android:src="@drawable/avatar"
+                        app:civ_border_color="@color/colorAccent"
+                        app:civ_border_width="2dp"/>
+                <TextView
+                        android:id="@+id/textView_large_login"
+                        android:text="Vasya"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textSize="18sp"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/textView_large_description"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="@dimen/text_size_normal"
+                        android:layout_margin="30dp"
+                        android:textColor="@color/colorNoAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolBar_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_toolbar"
+                    app:layout_collapseMode="pin"/>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_mem_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PROFILE"/>
-</LinearLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

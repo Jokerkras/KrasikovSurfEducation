@@ -12,7 +12,7 @@ import com.example.krasikovsurfeducation.mvp.activities.LoginActivity
 import com.example.krasikovsurfeducation.mvp.activities.MemDescriptionActivity
 import kotlinx.android.synthetic.main.cardview_mem_item.view.*
 
-class MemAdapter(private val memList: ArrayList<MemDto>,val itemClick: (mem: MemDto) -> Unit): RecyclerView.Adapter<MemAdapter.MemHolder>() {
+class MemAdapter(private var memList: ArrayList<MemDto>,val itemClick: (mem: MemDto) -> Unit): RecyclerView.Adapter<MemAdapter.MemHolder>() {
 
 
     fun refreshMemList(list: List<MemDto>) {

@@ -13,6 +13,7 @@ import com.example.krasikovsurfeducation.mvp.presenters.AddMemPresenter
 import com.example.krasikovsurfeducation.mvp.views.AddMemView
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_add_mem.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -22,7 +23,9 @@ import java.util.concurrent.TimeUnit
 class AddMemFragment : MvpAppCompatFragment(), AddMemView {
 
     @InjectPresenter lateinit var addMemPresenter: AddMemPresenter
-    var mem = MemDto(id = null, title = "", description = "", createdDate = 0, photoUtl = "", isFavorite = false)
+    var mem = MemDto(id = null, title = "", description = "", createdDate = 0, photoUtl = "", isFavorite = false, isMy = true)
+    lateinit var titleChange: Disposable
+    lateinit var descriptionChange: Disposable
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +38,11 @@ class AddMemFragment : MvpAppCompatFragment(), AddMemView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         btn_add_image.setOnClickListener { addMemPresenter.selectImage(context!!) }
-        val titleChange = editText_title.textChanges()
+        titleChange = editText_title.textChanges()
             .debounce(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { setEnableOnCreate() }
-        val descriptionChange = editText_description.textChanges()
+        descriptionChange = editText_description.textChanges()
             .debounce(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { setEnableOnCreate() }
@@ -67,6 +70,12 @@ class AddMemFragment : MvpAppCompatFragment(), AddMemView {
     }
 
     override fun opemMemList() {
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        titleChange.dispose()
+        descriptionChange.dispose()
     }
 
     companion object {

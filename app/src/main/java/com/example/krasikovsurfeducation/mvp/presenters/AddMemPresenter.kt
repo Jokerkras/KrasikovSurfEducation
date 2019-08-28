@@ -36,8 +36,6 @@ class AddMemPresenter: MvpPresenter<AddMemView>() {
 
     }
 
-
-
     fun saveMem(mem: MemDto) {
         memDao.insertMem(mem = mem)
     }

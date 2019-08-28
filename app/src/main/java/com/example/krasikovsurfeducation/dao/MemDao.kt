@@ -21,4 +21,7 @@ interface MemDao {
 
     @Query("SELECT * FROM mem_table")
     fun getMems(): Flowable<List<MemDto>>
+
+    @Query("SELECT * FROM mem_table WHERE isMy")
+    fun getMyMems(): Flowable<List<MemDto>>
 }

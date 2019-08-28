@@ -47,6 +47,17 @@ class UserStorage  @Inject constructor(val app: Application) {
         return sharedPreferences.getString(ACCESS_TOKEN, "")?: ""
     }
 
+    fun getUser(): UserInfo {
+        var user = UserInfo(
+            id = sharedPreferences.getInt(ID, 0),
+            username = sharedPreferences.getString(USERNAME, "")?: "",
+            firstname = sharedPreferences.getString(FIRST_NAME, "")?: "",
+            lastname = sharedPreferences.getString(LAST_NAME, "")?: "",
+            userDescription = sharedPreferences.getString(USER_DESCRIPTION, "")?: ""
+        )
+        return user
+    }
+
     companion object {
         var count = 0
     }

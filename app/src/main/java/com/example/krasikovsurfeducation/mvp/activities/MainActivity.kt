@@ -14,6 +14,11 @@ class MainActivity: MvpAppCompatActivity(), MainActivityView {
 
     @InjectPresenter lateinit var mainActivityPresenter: MainActivityPresenter
 
+    val memListFragment: MemListFragment by lazy { MemListFragment() }
+    val addMemFragment: AddMemFragment by lazy { AddMemFragment() }
+    val profileFragment: ProfileFragment by lazy { ProfileFragment() }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,15 +47,15 @@ class MainActivity: MvpAppCompatActivity(), MainActivityView {
     }
 
     override fun openMemList() {
-        openFragment(MemListFragment.newInstance())
+        openFragment(memListFragment)
     }
 
     override fun openAddMem() {
-        openFragment(AddMemFragment.newInstance())
+        openFragment(addMemFragment)
     }
 
     override fun openProfile() {
-        openFragment(AddMemFragment.newInstance())
+        openFragment(profileFragment)
     }
 
     fun openFragment(fragment: Fragment) {

@@ -15,4 +15,6 @@
     <string name="from_gallery">Из галереи</string>
     <string name="take_photo">Сделать фото</string>
     <string name="title_text">Текст</string>
+    <string name="text_about">О приложении</string>
+    <string name="text_logout">Выйти</string>
 </resources>
