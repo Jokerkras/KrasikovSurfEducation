@@ -40,11 +40,7 @@ class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
         textView_title.text = mem.title
         Glide.with(this).load(mem.photoUtl).into(imageView_mem_content)
         val date = (Date().time - mem.createdDate*1000)/1000/60/60/24
-        when(date%10) {
-            1L -> textView_date.text = "$date день назад"
-            2L, 3L, 4L -> textView_date.text = "$date дня назад"
-            else -> textView_date.text = "$date дней назад"
-        }
+        textView_date.text = resources.getQuantityString(R.plurals.daysGone, date.toInt(), date.toInt())
 
         textView_description.text = mem.description
         if (mem.isFavorite) imageButton_isFavorite.setImageResource(R.drawable.ic_added_to_favorite)

@@ -2,7 +2,6 @@ package com.example.krasikovsurfeducation.mvp.presenters
 
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.dao.MemDao
-import com.example.krasikovsurfeducation.model.MemDto
 import com.example.krasikovsurfeducation.mvp.views.MemListView
 import com.example.krasikovsurfeducation.repo.MemRepository
 import io.reactivex.android.schedulers.AndroidSchedulers

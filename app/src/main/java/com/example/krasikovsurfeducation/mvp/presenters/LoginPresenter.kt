@@ -31,6 +31,7 @@ class LoginPresenter: MvpPresenter<LoginView>() {
                 userStorage.saveAccessToken(it.accessToken)
                 userStorage.saveUserInfo(it.userInfo)
                 viewState.stopAnimation()
+                viewState.openMainActivityAndFinish()
             }, {
                 it.printStackTrace()
                 viewState.stopAnimation()
