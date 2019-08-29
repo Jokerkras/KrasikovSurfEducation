@@ -44,20 +44,21 @@ class AddMemPresenter: MvpPresenter<AddMemView>() {
         BaseApp.getAppComponent().inject(this)
     }
 
+    //TODO доразобраться
     fun selectImage(context: Context, activity: Activity){
         //Диалоговое окно
         val uri = Uri.parse("android.resource://com.example.krasikovsurfeducation/" + R.drawable.mem_to_save)
         AlertDialog.Builder(context, R.style.AlertDialogCustom)
             .setTitle(R.string.title_dialog)
             .setPositiveButton(R.string.from_gallery) { dialog, it ->
-                Log.d("myOut", "yes")
-                if(isStoragePermissionGranted(context, READ_EXTERNAL_STORAGE, activity))
-                    getImageFromGallery()
+                viewState.setImage(uri)
+                //if(isStoragePermissionGranted(context, READ_EXTERNAL_STORAGE, activity))
+                 //   getImageFromGallery()
             }
             .setNegativeButton(R.string.take_photo) { dialog, it ->
-                Log.d("myOut", "no")
-                if(isStoragePermissionGranted(context, CAMERA, activity))
-                    getImageFromCamera()
+                //if(isStoragePermissionGranted(context, CAMERA, activity))
+               //     getImageFromCamera()
+                viewState.setImage(uri)
             }
             .show()
 
@@ -140,8 +141,5 @@ class AddMemPresenter: MvpPresenter<AddMemView>() {
             ".jpg", /* suffix */
             storageDir /* directory */
         ))
-        /*val OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true)
-        val path =  Images.Media.insertImage(inContext.contentResolver, OutImage, "Title", null)
-        return Uri.parse(path)*/
     }
 }

@@ -1,7 +1,17 @@
 package com.example.krasikovsurfeducation.mvp.activities
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.example.krasikovsurfeducation.R
@@ -11,6 +21,8 @@ import com.example.krasikovsurfeducation.mvp.views.MemDescriptionView
 import kotlinx.android.synthetic.main.activity_mem_description.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
+import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -25,7 +37,9 @@ class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
         memDescriptionPresenter.mem = mem
         memDescriptionPresenter.showMem()
         btn_close.setOnClickListener { closeMemDescription() }
-        btn_share.setOnClickListener { memDescriptionPresenter.shareMem(getString(R.string.text_share), applicationContext, imageView_mem_content.drawable.toBitmap()) }
+
+        //TODO доразобраться
+        btn_share.setOnClickListener { }//memDescriptionPresenter.shareMem(getString(R.string.text_share), this, imageView_mem_content.drawable.toBitmap()) }
     }
     override fun closeMemDescription() {
         finish()
@@ -46,5 +60,14 @@ class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
         if (mem.isFavorite) imageButton_isFavorite.setImageResource(R.drawable.ic_added_to_favorite)
             else imageButton_isFavorite.setImageResource(R.drawable.ic_not_in_favorite)
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        memDescriptionPresenter.onRequestPermissionsResult(requestCode, grantResults, applicationContext)
+    }
+
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
