@@ -4,6 +4,7 @@ import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.di.module.DatabaseModule
 import com.example.krasikovsurfeducation.di.module.MVPModule
 import com.example.krasikovsurfeducation.di.module.NetModule
+import com.example.krasikovsurfeducation.interceptor.TokenInterceptor
 import com.example.krasikovsurfeducation.mvp.activities.LoginActivity
 import com.example.krasikovsurfeducation.mvp.activities.MemListFragment
 import com.example.krasikovsurfeducation.mvp.presenters.AddMemPresenter
@@ -23,4 +24,5 @@ interface AppComponent {
     fun inject(addMemPresenter: AddMemPresenter)
     fun inject(profilePresenter: ProfilePresenter)
     fun inject(memListPresenter: MemListPresenter)
+    fun inject(tokenInterceptor: TokenInterceptor)
 }

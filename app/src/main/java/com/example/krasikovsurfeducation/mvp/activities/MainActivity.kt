@@ -1,6 +1,11 @@
 package com.example.krasikovsurfeducation.mvp.activities
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.mvp.presenters.MainActivityPresenter
@@ -48,5 +53,19 @@ class MainActivity: MvpAppCompatActivity(), MainActivityView {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container_for_fragment, fragment)
         transaction.commit()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        addMemFragment.activityResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        addMemFragment.requestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

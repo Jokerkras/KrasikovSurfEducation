@@ -13,27 +13,11 @@ import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class LoginRepository  @Inject constructor(val retrofit: Retrofit, val userStorage: UserStorage){
+class LoginRepository  @Inject constructor(val retrofit: Retrofit){
 
     private val loginApi = retrofit.create(LoginApi::class.java)
 
-    fun login(loginUserRequestDto: LoginUserRequestDto,
-              onSuccess: (AuthInfoDto) -> Unit,
-              onError: (Throwable) -> Unit) {
-        loginApi.login(loginUserRequestDto)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                Log.d("myOut", it.toString())
-                userStorage.saveAccessToken(it.accessToken)
-                userStorage.saveUserInfo(it.userInfo)
-                onSuccess(it)
-            }, {
-                onError(it)
-            })
-    }
+    fun login(loginUserRequestDto: LoginUserRequestDto) = loginApi.login(loginUserRequestDto)
 
-    fun logout(): Completable {
-        return loginApi.logout()
-    }
+    fun logout(): Completable = loginApi.logout()
 }

@@ -5,6 +5,9 @@ import com.example.krasikovsurfeducation.model.AuthInfoDto
 import com.example.krasikovsurfeducation.model.LoginUserRequestDto
 import com.example.krasikovsurfeducation.repo.LoginRepository
 import com.example.krasikovsurfeducation.mvp.views.LoginView
+import com.example.krasikovsurfeducation.repo.UserStorage
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -13,6 +16,7 @@ import javax.inject.Inject
 class LoginPresenter: MvpPresenter<LoginView>() {
 
     @Inject lateinit var loginRepo: LoginRepository
+    @Inject lateinit var userStorage: UserStorage
 
     init {
         BaseApp.getAppComponent().inject(this)
@@ -20,14 +24,19 @@ class LoginPresenter: MvpPresenter<LoginView>() {
 
     fun startLogin(loginUserRequestDto: LoginUserRequestDto) {
         viewState.startAnimation()
-        loginRepo.login(loginUserRequestDto, {
-            viewState.stopAnimation()
-            viewState.openMainActivityAndFinish()
-        }, {
-            it.printStackTrace()
-            viewState.stopAnimation()
-            viewState.showError()
-        })
+        val request = loginRepo.login(loginUserRequestDto)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                userStorage.saveAccessToken(it.accessToken)
+                userStorage.saveUserInfo(it.userInfo)
+                viewState.stopAnimation()
+                viewState.openMainActivityAndFinish()
+            }, {
+                it.printStackTrace()
+                viewState.stopAnimation()
+                viewState.showError()
+            })
     }
 
     fun onClickPasswordVisibility() {
