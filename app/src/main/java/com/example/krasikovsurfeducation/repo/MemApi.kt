@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface MemApi {
 
     @GET("memes")
-    fun memes(@Query("token") token: String): Observable<List<MemDto>>
+    fun memes(): Observable<List<MemDto>>
 
 }

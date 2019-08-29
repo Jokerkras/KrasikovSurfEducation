@@ -8,10 +8,10 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class MemRepository @Inject constructor(val retrofit: Retrofit, val userStorage: UserStorage) {
+class MemRepository @Inject constructor(val retrofit: Retrofit) {
 
     private val memApi = retrofit.create(MemApi::class.java)
 
-    fun getMemList(): Observable<List<MemDto>> = memApi.memes(userStorage.getAccessToken())
+    fun getMemList(): Observable<List<MemDto>> = memApi.memes()
 
 }
