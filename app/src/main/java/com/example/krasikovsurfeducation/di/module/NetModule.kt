@@ -32,7 +32,7 @@ class NetModule(val app: Application) {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(): LoginRepository = LoginRepository(provideRetrofit(), provideUserManage())
+    fun provideLoginRepository(): LoginRepository = LoginRepository(provideRetrofit())
 
     @Provides
     @Singleton
