@@ -20,4 +20,5 @@
     <string name="title_logout_dialog">Действительно хотите выйти?</string>
     <string name="logout_cancel">ОТМЕНА</string>
     <string name="logout_yes">ВЫЙТИ</string>
+    <string name="text_share">Поделится</string>
 </resources>

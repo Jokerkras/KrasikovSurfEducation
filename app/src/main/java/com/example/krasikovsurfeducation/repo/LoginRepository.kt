@@ -17,23 +17,18 @@ class LoginRepository  @Inject constructor(val retrofit: Retrofit, val userStora
 
     private val loginApi = retrofit.create(LoginApi::class.java)
 
-    fun login(loginUserRequestDto: LoginUserRequestDto,
-              onSuccess: (AuthInfoDto) -> Unit,
-              onError: (Throwable) -> Unit) {
-        loginApi.login(loginUserRequestDto)
-            .observeOn(AndroidSchedulers.mainThread())
+    fun login(loginUserRequestDto: LoginUserRequestDto) = loginApi.login(loginUserRequestDto)
+
+           /* .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                Log.d("myOut", it.toString())
                 userStorage.saveAccessToken(it.accessToken)
                 userStorage.saveUserInfo(it.userInfo)
                 onSuccess(it)
             }, {
                 onError(it)
             })
-    }
+    }*/
 
-    fun logout(): Completable {
-        return loginApi.logout()
-    }
+    fun logout(): Completable = loginApi.logout()
 }

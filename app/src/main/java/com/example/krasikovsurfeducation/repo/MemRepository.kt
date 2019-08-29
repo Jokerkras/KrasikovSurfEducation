@@ -2,6 +2,7 @@ package com.example.krasikovsurfeducation.repo
 
 import android.util.Log
 import com.example.krasikovsurfeducation.model.MemDto
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
@@ -11,18 +12,6 @@ class MemRepository @Inject constructor(val retrofit: Retrofit, val userStorage:
 
     private val memApi = retrofit.create(MemApi::class.java)
 
+    fun getMemList(): Observable<List<MemDto>> = memApi.memes(userStorage.getAccessToken())
 
-    fun getMemList(onSuccess: (List<MemDto>) -> Unit,
-            onError: (Throwable) -> Unit) {
-        memApi.memes(userStorage.getAccessToken())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                Log.d("myOut", it.toString())
-                onSuccess(it)
-            }, {
-                onError(it)
-            })
-
-    }
 }

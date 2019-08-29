@@ -1,7 +1,8 @@
 package com.example.krasikovsurfeducation.mvp.activities
 
-import android.icu.text.SimpleDateFormat
+import android.content.Intent
 import android.os.Bundle
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.model.MemDto
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_mem_description.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 import java.util.*
+
 
 class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
 
@@ -23,13 +25,15 @@ class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
         memDescriptionPresenter.mem = mem
         memDescriptionPresenter.showMem()
         btn_close.setOnClickListener { closeMemDescription() }
+        btn_share.setOnClickListener { memDescriptionPresenter.shareMem(getString(R.string.text_share), applicationContext, imageView_mem_content.drawable.toBitmap()) }
     }
     override fun closeMemDescription() {
         finish()
+        imageView_mem_content.drawable
     }
 
-    override fun shareMem() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showChooser(intent: Intent) {
+        startActivity(intent)
     }
 
     override fun showMem(mem: MemDto) {
