@@ -48,13 +48,13 @@ class MemDescriptionPresenter: MvpPresenter<MemDescriptionView>(){
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, mem.description)
-            putExtra(Intent.EXTRA_STREAM, getBitmapUri(context, bitmap))
+            putExtra(Intent.EXTRA_STREAM, getImageUri(context, bitmap))
             type = "image/*"
         }
         viewState.showChooser(Intent.createChooser(sendIntent, text))
     }
 
-    fun getBitmapUri(inContext: Context, bitmap: Bitmap): Uri {
+    fun getImageUri(inContext: Context, bitmap: Bitmap): Uri {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File = inContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         val file = File.createTempFile(
@@ -62,11 +62,13 @@ class MemDescriptionPresenter: MvpPresenter<MemDescriptionView>(){
             ".png", /* suffix */
             storageDir /* directory */
         )
-        val fout = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fout)
+        val fOut = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
+        fOut.flush()
+        fOut.close()
         return FileProvider.getUriForFile(
             inContext,
-            "com.example.krasikovsurfeducation.fileprovider",
+            inContext.packageName + ".com.example.krasikovsurfeducation.provider",
             file
         )
     }

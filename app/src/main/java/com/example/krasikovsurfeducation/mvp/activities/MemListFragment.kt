@@ -42,8 +42,6 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
         initMemFragment()
     }
 
-
-
     override fun refreshList(it: List<MemDto>) {
         adapter.refreshMemList(it)
     }
@@ -62,10 +60,7 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
         recyclerView_mem_list.adapter = adapter
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
 
-        memListPresenter.initMems {
-            //progressBar_mem_download.visibility = View.INVISIBLE
-            adapter.refreshMemList(it)
-        }
+        memListPresenter.initMems()
     }
 
     fun showErrorOnStart() {

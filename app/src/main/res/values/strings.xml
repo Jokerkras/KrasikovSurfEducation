@@ -20,4 +20,12 @@
     <string name="title_logout_dialog">Действительно хотите выйти?</string>
     <string name="logout_cancel">ОТМЕНА</string>
     <string name="logout_yes">ВЫЙТИ</string>
+    <string name="text_share">Поделится</string>
+
+    <plurals name="daysGone">
+        <item quantity="zero">Сегодня</item>
+        <item quantity="one">%d день назад</item>
+        <item quantity="few">%d дня назад</item>
+        <item quantity="many">%d дней назад</item>
+    </plurals>
 </resources>

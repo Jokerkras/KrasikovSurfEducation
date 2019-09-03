@@ -10,4 +10,6 @@ interface AddMemView: MvpView {
     fun setImage(image: Uri)
     fun getMemForSave()
     fun opemMemList()
+    fun getImageFromCamera()
+    fun getImageFromGallery()
 }
