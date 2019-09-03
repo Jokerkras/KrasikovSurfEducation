@@ -39,7 +39,7 @@ class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
         btn_close.setOnClickListener { closeMemDescription() }
 
         //TODO доразобраться
-        btn_share.setOnClickListener { }//memDescriptionPresenter.shareMem(getString(R.string.text_share), this, imageView_mem_content.drawable.toBitmap()) }
+        btn_share.setOnClickListener { memDescriptionPresenter.shareMem(getString(R.string.text_share), this, imageView_mem_content.drawable.toBitmap()) }// }
     }
     override fun closeMemDescription() {
         finish()

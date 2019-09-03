@@ -62,13 +62,11 @@ class MemDescriptionPresenter: MvpPresenter<MemDescriptionView>(){
             ".png", /* suffix */
             storageDir /* directory */
         )
-        val fOut = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
-        fOut.flush()
-        fOut.close()
+        val fout = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fout)
         return FileProvider.getUriForFile(
             inContext,
-            inContext.packageName + ".com.example.krasikovsurfeducation.provider",
+            "com.example.krasikovsurfeducation.fileprovider",
             file
         )
     }
