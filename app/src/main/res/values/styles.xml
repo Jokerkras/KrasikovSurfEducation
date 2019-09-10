@@ -9,12 +9,14 @@
         <item name="colorError">@color/colorError</item>
         <item name="android:colorBackground">@color/colorBackground_1</item>
         <item name="android:textColor">@color/colorText</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
     </style>
 
     <style name="NoActionBarTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorBackground_1</item>
         <item name="colorPrimaryDark">@color/colorBackground_1</item>
         <item name="android:colorBackground">@color/colorBackground_1</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
     </style>
 
     <style name="TextFieldBoxesAuth">

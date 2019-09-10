@@ -6,24 +6,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import com.example.krasikovsurfeducation.model.MemDto
 import com.example.krasikovsurfeducation.mvp.views.MemDescriptionView
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import java.io.File
 import android.graphics.Bitmap
 import android.os.Build
-import android.os.Environment
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
-import androidx.core.content.FileProvider
-
-
+import com.example.krasikovsurfeducation.halper.BitmapUriUtils
 
 
 @InjectViewState
@@ -48,27 +40,10 @@ class MemDescriptionPresenter: MvpPresenter<MemDescriptionView>(){
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, mem.description)
-            putExtra(Intent.EXTRA_STREAM, getImageUri(context, bitmap))
+            putExtra(Intent.EXTRA_STREAM, BitmapUriUtils.getImageUri(context, bitmap))
             type = "image/*"
         }
         viewState.showChooser(Intent.createChooser(sendIntent, text))
-    }
-
-    fun getImageUri(inContext: Context, bitmap: Bitmap): Uri {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = inContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-        val file = File.createTempFile(
-            "PNG_${timeStamp}_", /* prefix */
-            ".png", /* suffix */
-            storageDir /* directory */
-        )
-        val fout = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fout)
-        return FileProvider.getUriForFile(
-            inContext,
-            "com.example.krasikovsurfeducation.fileprovider",
-            file
-        )
     }
 
     fun isStoragePermissionGranted(permission: String, activity: Activity): Boolean {

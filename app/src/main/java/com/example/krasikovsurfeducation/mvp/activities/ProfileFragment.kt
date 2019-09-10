@@ -1,14 +1,18 @@
 package com.example.krasikovsurfeducation.mvp.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.adapter.MemAdapter
+import com.example.krasikovsurfeducation.adapter.MemItemClickListener
 import com.example.krasikovsurfeducation.model.MemDto
 import com.example.krasikovsurfeducation.model.UserInfo
 import com.example.krasikovsurfeducation.mvp.presenters.ProfilePresenter
@@ -19,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
-class ProfileFragment: MvpAppCompatFragment(), ProfileVIew {
+class ProfileFragment: MvpAppCompatFragment(), ProfileVIew, MemItemClickListener {
 
     @InjectPresenter lateinit var profilePresenter: ProfilePresenter
     lateinit var adapter: MemAdapter
@@ -36,7 +40,7 @@ class ProfileFragment: MvpAppCompatFragment(), ProfileVIew {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MemAdapter(memList) {}
+        adapter = MemAdapter(memList, this)
         staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView_mem_list.adapter = adapter
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
@@ -82,5 +86,22 @@ class ProfileFragment: MvpAppCompatFragment(), ProfileVIew {
         val snackBar = Snackbar.make(recyclerView_mem_list, R.string.bad_connection_error, Snackbar.LENGTH_LONG)
         snackBar.view.setBackgroundColor(resources.getColor(R.color.colorError))
         snackBar.show()
+    }
+
+    override fun onMemClick(mem: MemDto, memImage: ImageView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
+            intent.putExtra("mem", mem)
+
+            val image = androidx.core.util.Pair<View, String>(memImage, "memImage")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                requireActivity(), image
+            )
+            startActivity(intent, options.toBundle())
+        } else {
+            val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
+            intent.putExtra("mem", mem)
+            startActivity(intent)
+        }
     }
 }

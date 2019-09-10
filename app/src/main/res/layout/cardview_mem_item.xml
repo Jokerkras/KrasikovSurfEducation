@@ -15,10 +15,12 @@
         android:layout_height="wrap_content">
     <ImageView
             android:id="@+id/image_view_mem"
+            android:transitionName="memImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     <TextView
             android:id="@+id/text_view_mem_title"
+            android:transitionName="memTitle"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/margin_mem_card_title"
             android:textSize="@dimen/text_size_memm_card_title"
