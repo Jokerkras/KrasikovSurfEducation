@@ -1,27 +1,27 @@
 package com.example.krasikovsurfeducation.mvp.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
 import com.example.krasikovsurfeducation.adapter.MemAdapter
-import com.example.krasikovsurfeducation.dao.MemDao
+import com.example.krasikovsurfeducation.adapter.MemItemClickListener
 import com.example.krasikovsurfeducation.model.MemDto
-import com.example.krasikovsurfeducation.mvp.presenters.MemDescriptionPresenter
 import com.example.krasikovsurfeducation.mvp.views.MemListView
 import com.example.krasikovsurfeducation.mvp.presenters.MemListPresenter
-import com.example.krasikovsurfeducation.mvp.views.MemDescriptionView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_mem_list.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
-import javax.inject.Inject
 
-class MemListFragment: MvpAppCompatFragment(), MemListView {
+class MemListFragment: MvpAppCompatFragment(), MemListView, MemItemClickListener {
 
     @InjectPresenter lateinit var memListPresenter: MemListPresenter
     lateinit var adapter: MemAdapter
@@ -49,13 +49,14 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
     override fun stopRefreshing() {
         refresh_layout_mem_list.isRefreshing = false
     }
+
     fun initMemFragment() {
         toolBar_mem_list.menu.clear()
         toolBar_mem_list.inflateMenu(R.menu.toolbar_fragment_mem_list_menu)
 
         refresh_layout_mem_list.setOnRefreshListener { memListPresenter.refreshList() }
         //progressBar_mem_download.visibility = View.VISIBLE
-        adapter = MemAdapter(memList) { openMem(it) }
+        adapter = MemAdapter(memList, this)
         staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView_mem_list.adapter = adapter
         recyclerView_mem_list.layoutManager = staggeredLayoutManager
@@ -67,10 +68,21 @@ class MemListFragment: MvpAppCompatFragment(), MemListView {
         text_error_first_connection.visibility = View.VISIBLE
     }
 
-    fun openMem(mem: MemDto) {
-        val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
-        intent.putExtra("mem", mem)
-        startActivity(intent)
+    override fun onMemClick(mem: MemDto, memImage: ImageView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
+            intent.putExtra("mem", mem)
+
+            val image = androidx.core.util.Pair<View, String>(memImage, "memImage")
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                requireActivity(), image
+            )
+            startActivity(intent, options.toBundle())
+        } else {
+            val intent = Intent(activity?.applicationContext, MemDescriptionActivity::class.java)
+            intent.putExtra("mem", mem)
+            startActivity(intent)
+        }
     }
 
     override fun showBadConnectionError() {
