@@ -84,6 +84,7 @@ class AddMemFragment : MvpAppCompatFragment(), AddMemView {
     }
 
     override fun opemMemList() {
+        (requireActivity() as MainActivity).openMemList()
     }
 
     override fun onDestroyView() {

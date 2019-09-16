@@ -30,40 +30,37 @@ class MemDescriptionPresenter: MvpPresenter<MemDescriptionView>(){
     }
 
     fun shareMem(text: String, activity: Activity, bitmap: Bitmap) {
+        savedBitmap = bitmap
         if(isStoragePermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, activity))
-            sendMem(bitmap,activity.applicationContext, text)
+            sendMem(activity.applicationContext, text)
     }
 
-    fun sendMem(bitmap: Bitmap, context: Context, text: String){
-        savedBitmap = bitmap
+    fun sendMem(context: Context, text: String){
         savedText = text
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, mem.description)
-            putExtra(Intent.EXTRA_STREAM, BitmapUriUtils.getImageUri(context, bitmap))
+            putExtra(Intent.EXTRA_STREAM, BitmapUriUtils.getImageUri(context, savedBitmap))
             type = "image/*"
         }
         viewState.showChooser(Intent.createChooser(sendIntent, text))
     }
 
-    fun isStoragePermissionGranted(permission: String, activity: Activity): Boolean {
+    fun isStoragePermissionGranted(text: String, activity: Activity): Boolean {
         val per: Int
-        per = if(permission == WRITE_EXTERNAL_STORAGE)
-            STORAGE_REQUEST
-        else
-            STORAGE_REQUEST
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ContextCompat.checkSelfPermission(activity.applicationContext, permission) == PackageManager.PERMISSION_GRANTED) {
+            if(ContextCompat.checkSelfPermission(activity.applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 return true
             } else {
                 ActivityCompat.requestPermissions(
                     activity,
-                    arrayOf(permission),
-                    per
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    STORAGE_REQUEST
                 )
                 return false
             }
         } else { //permission is automatically granted on sdk<23 upon installation
+            sendMem(activity.applicationContext, text)
             return true
         }
     }
@@ -76,7 +73,7 @@ class MemDescriptionPresenter: MvpPresenter<MemDescriptionView>(){
         }
         when(requestCode){
             STORAGE_REQUEST -> {
-                sendMem(savedBitmap, context, savedText)
+                sendMem(context, savedText)
             }
         }
     }

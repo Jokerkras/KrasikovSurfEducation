@@ -42,8 +42,7 @@ class MemDescriptionActivity : MvpAppCompatActivity(), MemDescriptionView {
         btn_share.setOnClickListener { memDescriptionPresenter.shareMem(getString(R.string.text_share), this, imageView_mem_content.drawable.toBitmap()) }// }
     }
     override fun closeMemDescription() {
-        finish()
-        imageView_mem_content.drawable
+        onBackPressed()
     }
 
     override fun showChooser(intent: Intent) {

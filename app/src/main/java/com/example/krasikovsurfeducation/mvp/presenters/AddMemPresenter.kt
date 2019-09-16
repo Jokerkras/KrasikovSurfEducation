@@ -1,9 +1,7 @@
 package com.example.krasikovsurfeducation.mvp.presenters
 
-import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.net.Uri
 import com.example.krasikovsurfeducation.BaseApp
 import com.example.krasikovsurfeducation.R
@@ -13,21 +11,15 @@ import com.example.krasikovsurfeducation.mvp.views.AddMemView
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject
-import android.Manifest.permission
 import android.Manifest.permission.*
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import android.os.Build
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
-import android.provider.MediaStore.Images
 import android.graphics.Bitmap
 import android.os.Environment
-import java.io.ByteArrayOutputStream
-import android.provider.MediaStore
-import android.util.Log
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,6 +58,7 @@ class AddMemPresenter: MvpPresenter<AddMemView>() {
 
     fun saveMem(mem: MemDto) {
         memDao.insertMem(mem = mem)
+        viewState.opemMemList()
     }
 
     fun prepareMem() {
